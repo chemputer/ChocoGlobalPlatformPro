@@ -42,7 +42,7 @@ This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Refe
     <!-- <copyright>Year Software Vendor</copyright> -->
     <!-- If there is a license Url available, it is required for the community feed -->
     <licenseUrl>https://raw.githubusercontent.com/martinpaljak/GlobalPlatformPro/master/LICENSE</licenseUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>-->
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/martinpaljak/GlobalPlatformPro</projectSourceUrl>
     <docsUrl>https://github.com/martinpaljak/GlobalPlatformPro</docsUrl>
     <!--<mailingListUrl></mailingListUrl>-->
