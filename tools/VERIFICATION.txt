@@ -1,0 +1,13 @@
+﻿VERIFICATION
+Verification is intended to assist the Chocolatey moderators and community
+in verifying that this package's contents are trustworthy.
+ 
+1. Download <https://github.com/martinpaljak/GlobalPlatformPro/releases/download/v20.01.23/gp.exe>
+2. Then use one of the following methods to obtain the checksum
+  - Use powershell function 'Get-Filehash'
+  - Use chocolatey utility 'checksum.exe'
+
+  checksum type: sha256
+  checksum: 66B9A6F8C27C720A82EBF43469BD365678B1832CFFD4D0581358CEC7A12FAD2C
+
+File 'LICENSE.txt' is obtained from <https://raw.githubusercontent.com/martinpaljak/GlobalPlatformPro/master/LICENSE>
