@@ -34,6 +34,7 @@ Invoke-WebRequest $download -Out $PSScriptRoot\tools\$file
 #show files in the tools directory, which is what will be added to the nupkg
 ls $PSScriptRoot\tools\
 #pack it with the version number, and output the nupkg to the build directory
+cd $root
 choco pack --version $version configuration=release --outputdirectory build
 #must cd to build directory to push the newly packed nupkg
 cd build
