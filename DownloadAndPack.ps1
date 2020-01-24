@@ -38,6 +38,7 @@ choco pack --version $version configuration=release --outputdirectory build
 #must cd to build directory to push the newly packed nupkg
 cd build
 #push the nupkg, using the api and location in the global settings
-choco push 
+choco push
+#choco push --noop 
 #return to root directory, useful for debugging in the ISE
 cd ..
