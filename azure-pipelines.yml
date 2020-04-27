@@ -10,6 +10,7 @@ steps:
 
 - task: PowerShell@2
   inputs:
+    env:   
     targetType: 'inline'
     script: |
       $repo = "martinpaljak/GlobalPlatformPro"
@@ -17,14 +18,41 @@ steps:
       
       $releases = "https://api.github.com/repos/$repo/releases"
       $download = "https://github.com/$repo/releases/download/$tag/$file"
-      $choco.url = [string]$download
+      $env:url = [string]$download
       $version = $tag.substring(1)
-      $choco.version = $version
+      $env:version = $version
       Invoke-WebRequest $download -Out $PsScriptRoot\tools\$file
       $hash = (Get-FileHash -File $PSScriptRoot\tools\$file -Algorithm SHA256)
-      $choco.hash = [string]$hash
+      $env:hash = [string]$hash
     errorActionPreference: 'silentlyContinue'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+- powershell: 
+      $repo = "martinpaljak/GlobalPlatformPro"
+      $file = "gp.exe"
+      
+      $releases = "https://api.github.com/repos/$repo/releases"
+      $download = "https://github.com/$repo/releases/download/$tag/$file"
+      $env:p.url = [string]$download
+      $version = $tag.substring(1)
+      $env:p.version = $version
+      Invoke-WebRequest $download -Out $PsScriptRoot\tools\$file
+      $hash = (Get-FileHash -File $PSScriptRoot\tools\$file -Algorithm SHA256)
+      $env:p.hash = [string]$hash
+  errorActionPreference: 'silentlyContinue'
+  workingDirectory: '$(System.DefaultWorkingDirectory)'
+  displayName: "Getting the hash, link and version"
+
+- task: ChocolateyCommand@0
+  inputs:
+    command: 'custom'
+    extraArguments: '--url $(p.url) --version $(p.version) --checksum $(p.hash)'
+    debug: true
+    verbose: true
+    customCommand: 'pack'
+    customArguments: '-v --noop --out $(System.DefaultWorkingDirectory)\tools'
+
+     
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -33,4 +61,5 @@ steps:
 # - master
 
 - script: 
-  displayName: $(hash)
+  displayName: $(choco.hash)
+  
