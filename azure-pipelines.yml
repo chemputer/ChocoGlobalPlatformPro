@@ -1,4 +1,5 @@
 # Starter pipeline
+steps:
 - task: DownloadGitHubRelease@0
   inputs:
     connection: 'github.com_chemputer'
@@ -28,9 +29,5 @@
 #- trigger:
 # - master
 
- 
-
-
-steps:
 - script: 
   displayName: $(hash)
