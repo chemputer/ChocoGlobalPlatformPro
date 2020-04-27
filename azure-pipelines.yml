@@ -1,11 +1,4 @@
 # Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-#- trigger:
-# - master
-
 - task: DownloadGitHubRelease@0
   inputs:
     connection: 'github.com_chemputer'
@@ -14,6 +7,30 @@
     itemPattern: '*.exe'
     downloadPath: '$(System.ArtifactsDirectory)'
 
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $repo = "martinpaljak/GlobalPlatformPro"
+      $file = "gp.exe"
+      
+      $releases = "https://api.github.com/repos/$repo/releases"
+      $download = "https://github.com/$repo/releases/download/$tag/$file"
+      $version = $tag.substring(1)
+      Invoke-WebRequest $download -Out $PsScriptRoot\tools\$file
+      $hash = Get-FileHash -File $PSScriptRoot\tools\$file -Algorithm SHA256
+    errorActionPreference: 'silentlyContinue'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+#- trigger:
+# - master
+
+ 
+
+
 steps:
 - script: 
-  displayName: 'Run a one-line script'
+  displayName: $(hash)
